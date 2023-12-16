@@ -1,5 +1,3 @@
-using LabAcademiaAPI.Interfaces.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var m_Configuracao = new ConfigurationBuilder()
@@ -83,7 +81,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Administrador", policy => policy.Requirements.Add(new RoleRequirement("ADM")));
+    options.AddPolicy("Administrador", policy => policy.Requirements.Add(new RoleRequirement(["ADM"])));
+    options.AddPolicy("Professor", policy => policy.RequireRole(["PROFESSOR", "ADM"]));//.Requirements.Add(new RoleRequirement(["PROFESSOR", "ADM"])));
 });
 
 var app = builder.Build();

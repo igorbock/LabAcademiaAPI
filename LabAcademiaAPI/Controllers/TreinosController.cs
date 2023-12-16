@@ -2,7 +2,7 @@
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Policy = "Professor")]
 public class TreinosController : Controller
 {
     public EFRepositoryAbstract<Treino>? C_TreinosRepositorio { get; set; }
@@ -18,27 +18,23 @@ public class TreinosController : Controller
     public async Task<IEnumerable<Treino>> CM_ObterTreinosAsync(int? p_Codigo) => await C_TreinosRepositorio!.CM_LerAsync(p_Codigo);
 
     [HttpPut]
-    [Authorize(Policy = "Administrador")]
     public async Task CM_AtivarDesativarTreinoAsync(int p_Codigo) => await C_TreinosService!.CM_AtivarDesativarTreinoAsync(p_Codigo);
 
     [HttpPost]
-    [Authorize(Policy = "Administrador")]
-    public async Task CM_CriarTreinoAsync(char p_Codigo, string p_Nome)
+    public async Task CM_CriarTreinoAsync(Treino p_Treino)
     {
-        var m_Treino = new Treino
-        {
-            Codigo = p_Codigo,
-            Nome = p_Nome
-        };
-        await C_TreinosRepositorio!.CM_AdicionarAsync(m_Treino);
+        //var m_Treino = new Treino
+        //{
+        //    Codigo = p_Codigo,
+        //    Nome = p_Nome
+        //};
+        await C_TreinosRepositorio!.CM_AdicionarAsync(p_Treino);
     }
 
     [HttpDelete]
-    [Authorize(Policy = "Administrador")]
     public async Task CM_RemoverTreinoAsync(int p_Codigo) => await C_TreinosRepositorio!.CM_RemoverAsync(p_Codigo);
 
     [HttpPut("editar")]
-    [Authorize(Policy = "Administrador")]
     public async Task CM_EditarTreinoAsync(Treino p_Treino) => await C_TreinosRepositorio!.CM_AtualizarAsync(p_Treino);
 
     [HttpPost("iniciar")]

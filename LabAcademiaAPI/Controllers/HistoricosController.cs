@@ -2,7 +2,7 @@
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Policy = "Professor")]
 public class HistoricosController : Controller
 {
     public LabAcademiaContext? C_Contexto { get; set; }

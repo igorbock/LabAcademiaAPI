@@ -1,5 +1,4 @@
-﻿
-namespace LabAcademiaAPI.Requirements;
+﻿namespace LabAcademiaAPI.Requirements;
 
 public class RoleRequirementAuthorizationHandler : AuthorizationHandler<RoleRequirement>
 {

@@ -29,8 +29,11 @@ public class UsuarioTreinoService : IUsuarioTreinoService
         return m_Retorno.SingleOrDefault()!;
     }
 
-    public async Task<IdentityUser> CM_ObterUsuarioPorIdAsync(string p_ID)
+    public async Task<IdentityUser> CM_ObterUsuarioPorIdAsync(string p_ID, string p_Authorization)
     {
+        var m_Token = p_Authorization.Replace("Bearer ", string.Empty);
+        C_HttpClient!.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", m_Token);
+
         var m_Endereco = $"https://localhost:7121/api/Usuario/id?p_Id={p_ID}";
         var m_Response = await C_HttpClient!.GetAsync(m_Endereco);
         m_Response.EnsureSuccessStatusCode();
